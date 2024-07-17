@@ -115,20 +115,18 @@ def spray():
     # 대각선으로 4 방향 (k 만큼)
     main_grid[max_x][max_y] = 0     # 제초제 뿌리는 칸에 나무 박멸
 
-    for d in range(k):
-        for ddx, ddy in [(1, 1), (-1, 1), (1, -1), (-1, -1)]:
+    for ddx, ddy in [(1, 1), (-1, 1), (1, -1), (-1, -1)]:
+        for d in range(k):
             nx = max_x + d * ddx
             ny = max_y + d * ddy
-            # range check
-            if in_range(nx, ny):
-                if has_trees(nx, ny):
-                    main_grid[nx][ny] = 0   # 빈칸으로 업데이트
-                    sprayed[nx][ny] = c     # sprayed grid 에 c 저장
-                else:
-                    break
-            else:
-                break
 
+            if not in_range(nx, ny):
+                break
+            sprayed[nx][ny] = c
+            if not has_trees(nx, ny):
+                break
+            main_grid[nx][ny] = 0
+            
     return max_kill
 
 
